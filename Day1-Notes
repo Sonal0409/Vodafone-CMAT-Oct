@@ -198,7 +198,35 @@ Save the file
 
 # ansible-playbook playbook1.yml
 
+=================================================================
+Go to worker 1 and worker 2 exeucte below command:
 
+# apt-get update
+
+Now create the playbook and run it
+
+
+
+# vim playbook2.yml
+
+
+- name: Variables in Ansible
+  hosts: webserver
+  become: true  # we want to escalate the permissions of the current ansiuser
+  become_user: root
+  vars:
+   pkg_name: apache2
+   pkg_state: present   # here present = install apache2
+   service_state: started  # statrted is a choice given by service module to start a service, other choices are STOPED, RESTARTED
+  tasks:
+  - name: Install package {{pkg_name}} on host server
+    package: name={{pkg_name}} state={{pkg_state}}
+  - name: Start {{pkg_name}}  service
+    service: name={{pkg_name}} state={{service_state}}
+
+Save the file
+
+# ansible-playbook playbook2.yml
 
 
 
