@@ -176,6 +176,41 @@ execute this command:
 #   ansible  webserver -m ping
 
 
+Playbook with debug module and command module:
+======================
+# vim playbook1.yml
+
+
+- name: debug module and register module in Ansible
+  hosts: webserver
+  tasks:
+  - name: Print a message
+    debug: msg="Hello form Ansible Controller"
+  - name: Execute a command on host servers
+    command: hostname -s
+    register: command_output
+  - name: Print the register variable output
+    debug: var=command_output.stdout
+
+Save the file
+
+# ansible-playbook playbook1.yml --syntax-check
+
+# ansible-playbook playbook1.yml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
