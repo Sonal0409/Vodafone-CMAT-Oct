@@ -160,3 +160,34 @@ ansible -i /pathtoinventoryfile  groupname -m modulename
 execute this command:
 #   ansible -i /home/ansiuser/myinventory webserver -m ping
 
+
+Create Ansible configuration file
+
+# vim ansible.cfg
+
+
+[defaults]
+
+inventory = /home/ansiuser/myinventory
+
+
+
+execute this command:
+#   ansible  webserver -m ping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
