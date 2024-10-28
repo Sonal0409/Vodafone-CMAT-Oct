@@ -251,11 +251,35 @@ validate if the file is created or not
 # ansible webserver -m command -a "ls /tmp"
 
 
+==============================
+
+# vim variables.yml
+
+pkg_name: git
+pkg_state: present
+file_path: /tmp/demo1
+file_state: touch
+username: user01
+
+save the file
+
+# vim playbook4.yml
+
+- name: Variables from a file
+  hosts: webserver
+  become: true
+  vars_files:
+   - variables.yml
+  tasks:
+  - name: Install a package {{pkg_name}}
+    package: name={{pkg_name}} state={{pkg_state}}
+  - name: create  a file at {{file_path}}
+    file: path={{file_path}} state={{file_state}}
+  - name: Crate a new user {{username}}
+    user: name={{username}} state=present
 
 
-
-
-
+save and run the playbook.
 
 
 
