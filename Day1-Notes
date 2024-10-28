@@ -227,6 +227,39 @@ Now create the playbook and run it
 Save the file
 
 # ansible-playbook playbook2.yml
+=========================================================
+Pass the variable value at run time
+
+# vim playbook3.yml
+
+- name: Pass Variable value in Ansible
+  hosts: webserver
+  become: true
+  vars:
+   file_path: 
+   file_state: 
+  tasks:
+  - name: Create a file on the hostserver
+    file: path={{file_path}} state={{file_state}}
+
+save the file
+
+# ansible-playbook playbook3.yml --extra-vars "file_path=/tmp/file1 file_state=touch"
+
+validate if the file is created or not
+
+# ansible webserver -m command -a "ls /tmp"
+
+
+
+
+
+
+
+
+
+
+
 
 
 
