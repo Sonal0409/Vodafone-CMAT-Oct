@@ -11,6 +11,9 @@ Setup Ansible:
 Press ENTER key
 
 #  sudo apt-get update
+
+IGNORE THE KUBERNETES ERROR OR WARNINGS ON THE SCREEN
+
 #  sudo apt-get install -y ansible
 
 Ansible Installation is complete now on the Master node.
