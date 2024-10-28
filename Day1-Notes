@@ -141,10 +141,17 @@ Lets create a file with name as myinventory and create host group inside it
 Press i to insert below data
 
 [webserver]
-172.31.26.98
-172.31.22.35
+<Worker1Ipaddress>
+<Worker2Ipaddress>
 
 Save the file.
+
+example:
+
+[webserver]
+172.31.7.154
+172.31.10.167
+
 
 Execute adhoc command using the current inventory file
 Syntax:
