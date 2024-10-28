@@ -134,3 +134,22 @@ Syntax:
 Repeat the same command to copy ssh key on Worker2 also.
 
 ======================================================
+
+Lets create a file with name as myinventory and create host group inside it
+
+# vim myinventory
+Press i to insert below data
+
+[webserver]
+172.31.26.98
+172.31.22.35
+
+Save the file.
+
+Execute adhoc command using the current inventory file
+Syntax:
+ansible -i /pathtoinventoryfile  groupname -m modulename
+
+execute this command:
+#   ansible -i /home/ansiuser/myinventory webserver -m ping
+
