@@ -1,0 +1,107 @@
+
+Configuration Management:
+====================================
+
+-> Making changes to the available servers
+-> Installing packages
+-> Creating config files
+-> copying  files and libraries
+-> Deploying the code
+-> Upgrading packages
+-> Managing Data bases
+
+Various Environments -> all the servers in an env should be consistent
+With 100s of servers in an environment -> if we desire to have same changes across all servers
+Doing this task manually 
+ > will be a tedious task 
+ > repetitive 
+ > errors
+ > miss out changes on set of servers 
+ > keep track of changes done and what changes are not done 
+ > also ensure everyone in the team is aware of what changes have been done
+
+Using an Automation tool to manage configuration changes on available servers is called as Configuration management in DevOps
+
+There are many CM tools available:
+> Ansible
+> Puppet
+> Chef
+> Saltstack
+
+
+Ansible:
+==============================
+Ansible is an Open source tool 
+Ansible is product of RHEL, so ansible will always be installed on linux based OS
+Ansible is a simple and easy to work tool 
+Ansible has a GUI called as Ansible tower -> but this feature comes with Enterprise Ansible 
+Ansible tower community version is available which is called as Ansible AWX
+Ansible is an Agent less tool. That means the worker nodes will nto have any ansible component.
+Ansible will only be installed on a single machine -> Ansible controller machine
+Ansible code is written in YAML using playbooks
+Ansible will connect to host servers using SSH and windows server using WINRM
+Ansible is a python based tool
+
+Ansible has got 4 main components:
+
+1. Inventory: WHERE TO DO THE CHANGES
+ ==============================
+ It is a simple file in which we will write the list of Ip address or hostnames of the servers 
+ where ansible can connect and make changes.
+ This file is available by default with a name "hosts" and is available at the directory "/etc/ansible"
+ You can create your inventory file also and place it any directory of the controller.
+ 
+ There are 2 types of inventory file:
+ 
+ 1. Static Inventory: 
+ ============================
+ Inventory file is created by user 
+ Ip address are written by the user in the file
+ When you have limited infra then create the static file.
+ 
+ 2. Dynamic Inventory:
+ =============================
+ If the number of servers are auto scaling that means they are on the cloud
+ then we use ansible to generate our inventory file
+
+MODULES:
+====================
+They are nothing but python scripts (ansible pre-written code) that are pushed to host servers to make changes.
+These modules accept some input parameters from the user to configure desired changes on the servers
+
+example : copy modue -> accept input like source file location and destination
+
+get_url : url=https://example.com/file1 dest=/tmp
+
+Ansible works by connecting to your host servers and pushing these scripts which we call as ansible modules on them.
+
+https://docs.ansible.com/ansible/2.8/modules/list_of_all_modules.html
+
+We can create our own custom modules also in ansible using pyhton.
+
+Playbooks:
+============================
+
+Ansible code will be written in a file called as playbook 
+A playbook consist of a play 
+A play is nothing but:
+  inventory hosts -> servers where to do changes 
+  tasks to be performed
+     -> modules to be executed
+playbook is written in YAML
+
+playbook with YAML code --> playbook is run on the ACM--> 
+it is then converted to a python code --> this py code is copied on the hostserver
+ansible then executed the py program on each hosts --> after the code is executed --> 
+the python code is deleted from host server
+In the playbook we can add -> variable, conditions, dependencies, handle errors, loops 
+
+
+Ansible.cfg file:
+=======================
+
+ansible.cfg file -> present in /etc/ansible 
+=========================================================
+All the configuration details of ansible are placed in this file.
+user details, password details, module location, inventory location, fork details 
+You can also create your own ansible.cfg with required parameters for the execution of the playbook
