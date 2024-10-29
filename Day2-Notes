@@ -141,6 +141,45 @@ use flag --force-handlers:
 
 # ansible-playbook playbookhandler2.yml --force-handlers
 
+======================================
+Ansible Tags:
+========================================
+
+# vim playbookTags.yml
+
+- name: Handlers in Ansible
+  hosts: webserver
+  become: true
+  vars:
+   admin_email: ansible_admin@gmail.com
+  tasks:
+  - name: Execute a command
+    command: echo "execute a command on worker"
+    tags: cmd
+  - name: Deploy the index.html file
+    template: src=index.html.j2 dest=/var/www/html/index.html
+    tags: files
+  - name: Create a file
+    file: path=/tmp/file4 state=touch
+    tags: files
+  - name: Create a user
+    user: name=user02 state=present
+    tags: create
+  - name: Install a package
+    package: name=apache2 state=present
+    tags: create
+  - name: Uninstall a package
+    package: name=apache2 state=absent
+    tags: uninstall
+  - name: remove user
+    user: name=user02 state=absent
+    tags: uninstall
+
+
+# ansible-playbook playbookTags.yml --tags cmd
+# ansible-playbook playbookTags.yml --tags cmd,files
+# ansible-playbook playbookTags.yml --skip-tags uninstall
+# ansible-playbook playbookTags.yml --tags untagged
 
 
 
