@@ -15,7 +15,7 @@ ansible webserver -m setup -a "filter=ansible_distribution*"
 # vim  playbookFact.yml
 
 - name: Conditions in Ansible
-  hosts: localhost
+  hosts: webserver
   become: true
   tasks:
   - name: Install Apache webserver
