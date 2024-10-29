@@ -126,7 +126,53 @@ Fact variable can also be used for each worker custom configuration file.
 
 Conditions in Ansible is applied using the keyword WHEN 
 
+Handlers:
+====================
 
+By default when a playbook is executed all of its tasks will get executed
+
+But there are cases when we want set of tasks to be executed only when required not always
+
+So we can  create dependency between the tasks such that 
+
+If parent tasks status is changed -> it will notify the dependent task to execute 
+
+If parent tasks status is OKAY --> it will NOT notify the dependent task to execute 
+
+Tasks defined in the section "tasks" can be called as parent tasks 
+
+Tasks defined in the section "handlers" can be called as dependent tasks
+
+
+Demo1:
+===================
+If parent tasks status is changed -> it will notify the dependent task to execute 
+Handler section task are never executed by themselves.
+They are executed only when notified by parent task when its  status is changed  ==> here we will use notify keyword 
+
+Demo2:
+=================
+Handler tasks in a playbook will get executed only after all the parent tasks have been executed
+That means handlers are always executed at the last.
+Even if handlers have been notified in beginning of the playbook, they will always by default execute at the end 
+
+Demo3: 
+===================
+Once all the tasks have been executed only then the notified handlers will be executed 
+For any reason if the playbook fails -> the already notified handlers will not get executed. 
+
+But you can force ansible to run the notified handlers using flag --force-handlers
+============================================
+
+TAGS in Ansible:
+=========================
+If you have a large playbook, it may be useful to run only specific parts of it instead of running the entire playbook.
+
+Using tags to execute or skip selected tasks is a two-step process:
+
+Add tags to your tasks, either individually or multiple tasks can have same tag 
+
+Select or skip tags when you run your playbook.
 
 
 
