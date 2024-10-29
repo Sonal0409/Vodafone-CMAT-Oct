@@ -139,7 +139,7 @@ In this case handlers will not execute
 
 use flag --force-handlers:
 
-# ansible-playbook playbookHandlers.yml --force-handlers
+# ansible-playbook playbookhandler2.yml --force-handlers
 
 
 
