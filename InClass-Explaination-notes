@@ -105,3 +105,34 @@ ansible.cfg file -> present in /etc/ansible
 All the configuration details of ansible are placed in this file.
 user details, password details, module location, inventory location, fork details 
 You can also create your own ansible.cfg with required parameters for the execution of the playbook
+
+===================================================
+
+Fact Variables:
+=====================
+
+Whenever ansible playbook or an adhoc command is executed 
+Ansible executes a module called as setup module, this module will gather all the details about each worker nodes
+It will gather details like Ip address, hostname, storage, mouth, network, BIOS, memory
+So when ansible is gathering all the information, it must store the information in some Variables 
+These variables are called as Fact variables as they store the facts of the worker nodes
+These variable names are given by Ansible and value is computed by setup module and mapped to the variable.
+User will never create a fact variable. These are created by ansible only.
+The names of these variables always start with ansible_
+The variables values are dynamic because they values change as per each host server 
+These variables are computed with values of every host.
+Fact variables can be used to perform condition based playbook execution
+Fact variable can also be used for each worker custom configuration file.
+
+Conditions in Ansible is applied using the keyword WHEN 
+
+
+
+
+
+
+
+
+
+
+
