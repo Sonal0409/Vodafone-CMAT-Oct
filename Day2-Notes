@@ -71,8 +71,37 @@ To valdate execute below command
 
 # ansible webserver -m command -a "curl localhost:80"
 
+Handlers:
+==============================
+
+# vim playbookHandlers.yml
+
+- name: Handlers in Ansible
+  hosts: webserver
+  become: true
+  vars:
+   admin_email: ansible_admin@gmail.com
+  tasks:
+  - name: Execute a command
+    command: echo "execute a command on worker"
+    notify: Command on workers
+  - name: Deploy the index.html file
+    template: src=index.html.j2 dest=/var/www/html/index.html
+    notify: Restart apache2 server
+  - name: Create a file
+    file: path=/tmp/file4 state=touch
+  - name: Create a user
+    user: name=user02 state=present
+  handlers:
+  - name: Command on workers
+    command: hostname -s
+  - name: Restart apache2 server
+    service: name=apache2 state=restarted
 
 
+Save the file and run
+
+handler will be executed.
 
 
 
