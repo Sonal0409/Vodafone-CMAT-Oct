@@ -33,3 +33,87 @@ ansible webserver -m setup -a "filter=ansible_distribution*"
 # ansible-playbook playbookFact.yml
 
 
+Jinja2 Template:
+=================================
+
+# vim index.html.j2
+
+<h1> This is my application </h1>
+<marquee> Look I deployed my application using Jinja2 </marquee>
+The Ipaddress of the host is : {{ ansible_default_ipv4["address"] }}
+The Host node name : {{ ansible_nodename }}
+The Os family of the host is : {{ ansible_os_family }}
+For any issues contact the admin at : {{ admin_email }}
+
+Save the file
+
+# vim playbookDeploy.yml
+
+- name: Deploy HTML code on host server
+  hosts: webserver
+  become: true
+  vars:
+   admin_email: ansible_admin@gmail.com
+  tasks:
+  - name: Install apache2 package
+    package: name=apache2 state=present
+  - name: Start apache2 service
+    service: name=apache2 state=started
+  - name: Deploy the index.html file
+    template: src=index.html.j2 dest=/var/www/html/index.html
+  - name: Restart apache2 server
+    service: name=apache2 state=restarted
+
+save the file and execute
+# ansible-playbook playbookDeploy.yml
+
+To valdate execute below command
+
+# ansible webserver -m command -a "curl localhost:80"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
