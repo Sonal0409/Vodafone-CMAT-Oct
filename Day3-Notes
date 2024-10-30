@@ -1,0 +1,148 @@
+
+# sudo su -
+# su - ansiuser
+
+# mkdir roles
+
+# cd roles
+
+# ansible-galaxy init apacherole
+
+# cd apacherole
+
+# vim tasks/main.yml
+
+---
+# tasks file for apacherole
+
+  - name: Install {{pkg_name}}  package
+    package: name={{pkg_name}} state={{pkg_state}}
+  - name: Start the service
+    service: name={{pkg_name}} state={{service_state}}
+  - name: Update the ports.conf file in apche2 server
+    template: src=ports.conf.j2 dest={{conf_path}}
+    notify: Restart the service
+  - name: Deploy the index.html file
+    template: src=index.html.j2 dest={{index_path}}
+    notify: Restart the service
+  - name: Copy a text file
+    copy: src=demoroles dest={{file_path}}
+
+
+Save the file
+
+# vim templates/ports.conf.j2
+
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen {{apache_port}}
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+
+Save the file
+
+
+# vim templates/index.html.j2
+
+
+<h1> This is my application </h1>
+<marquee> Look I deployed my application using Jinja2 </marquee>
+The Ipaddress of the host is : {{ ansible_default_ipv4["address"] }}
+The Host node name : {{ ansible_nodename }}
+The Os family of the host is : {{ ansible_os_family }}
+For any issues contact the admin at : {{ admin_email }}
+
+Save this file
+
+# vim files/demoroles
+
+This is a File form ansible Controller
+
+<h1> This is my application </h1>
+<marquee> Look I deployed my application using Jinja2 </marquee>
+The Ipaddress of the host is : {{ ansible_default_ipv4["address"] }}
+The Host node name : {{ ansible_nodename }}
+The Os family of the host is : {{ ansible_os_family }}
+For any issues contact the admin at : {{ admin_email }}
+
+save the file
+
+# vim vars/main.yml
+---
+# vars file for apacherole
+
+pkg_name: apache2
+pkg_state: present
+service_state: started
+conf_path: /etc/apache2/ports.conf
+index_path: /var/www/html/index.html
+file_path: /etc/demoroles
+admin_email: ansible@gmail.com
+apache_port: 80
+
+
+save the file
+
+# vim handlers/main.yml
+---
+# handlers file for apacherole
+
+- name: Restart the service
+  service: name={{pkg_name}} state=restarted
+
+
+save the file
+
+Create the playbook to exeucte the role
+
+# vim playbookroles.yml
+
+ansiuser@ip-172-31-15-249:~$ cat playbookroles.yml
+
+- name: Roles in ansible
+  hosts: webserver
+  become: true
+  roles:
+   - apacherole
+
+
+Save and run playbook.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
