@@ -106,6 +106,10 @@ save the file
 
 Create the playbook to exeucte the role
 
+Comput of the roles directory
+
+# cd
+
 # vim playbookroles.yml
 
 ansiuser@ip-172-31-15-249:~$ cat playbookroles.yml
