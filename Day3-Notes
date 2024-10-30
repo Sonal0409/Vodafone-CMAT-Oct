@@ -123,6 +123,21 @@ ansiuser@ip-172-31-15-249:~$ cat playbookroles.yml
 
 Save and run playbook.
 
+===================================================
+
+Roles Example 2:
+
+Step 1:
+
+# git clone https://github.com/Sonal0409/Ansible-Project.git
+
+Step 2:
+
+# cd Ansible-Project
+
+Run the command to execute the playbook and the roles
+
+# ansible-playbook -i /home/ansiuser/myinventory playbook.yml
 
 
 
