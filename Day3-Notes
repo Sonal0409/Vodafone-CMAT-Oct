@@ -140,6 +140,56 @@ Run the command to execute the playbook and the roles
 # ansible-playbook -i /home/ansiuser/myinventory playbook.yml
 
 
+==========================================================================
+
+Ansible Dynamic Inventory
+
+# su - ansiuser
+
+Install ansible aws_ec2 plugins
+The plugin is part of the amazon.aws collection
+We will install the desired collection
+
+# ansible-galaxy collection install amazon.aws
+
+In order to install boto3 and botocore we need python3-pip package
+
+# sudo apt install python3-pip
+
+# pip3 install boto3
+
+# pip show boto3
+
+# pip3 install --upgrade ansible
+
+Update the ansible.cfg file for it to use the aws_ec2 plugin to fetch the inventory
+
+# vim ansible.cfg
+
+[defaults]
+
+inventory = /home/ansiuser/myinventory
+
+enable_plugins = aws_ec2
+Save the file
+
+
+
+
+Create the aws_ec2 inventory file
+
+# vim aws_ec2.yml
+
+plugin: amazon.aws.aws_ec2
+regions:
+ - us-east-1
+
+
+Save the file
+
+
+
+
 
 
 
