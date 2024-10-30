@@ -187,6 +187,72 @@ regions:
 
 Save the file
 
+===============================================================================
+Launch the AWS lab:
+
+
+Create user and credentials in AWS:
+============================
+
+We need create an new user in AWS whose credentials will be provided to terraform -- IAM service on AWS will be used
+
+In AWS 
+
+IAM > Users > click on add user
+
+ > give a username
+ > click next >
+ select Attach policies directly > select AdministratorAccess below >>
+
+ click on next >
+
+click on create user.
+
+Now lets attach access key and secret key to the user.
+
+Click on user name>>
+
+ click on security credentials
+
+ > Scroll down → Select Access keys> click on create access key
+ > select Command Line Interface (CLI)
+
+> scroll down → click on I understand the above recommendation and want to proceed to create an access key. > press next > click on create access key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+On the Ansible Master Lab:
+
+Create access key and secret key and save it as environment variables:
+
+Run these commands
+
+ # export AWS_ACCESS_KEY_ID=
+#export AWS_SECRET_ACCESS_KEY=
+
+Now execute the command to list the inventory:
+
+# ansible-inventory -i /home/ansiuser/aws_ec2.yml --list
+
+
+Create Ec2 instances on AWS 
+
+On the master node run the inventory command:
+
+# ansible-inventory -i /home/ansiuser/aws_ec2.yml --list
 
 
 
