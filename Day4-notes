@@ -82,6 +82,36 @@ Save the file
 # terraform init
 
 ================================
+Terraform code is always written in the form of a block
+
+provider block
+resource block
+data block
+variable block
+local block
+dynamic block
+provisioner block
+connection block
+
+a block is represented with 
+{
+    // terraform code
+}
+every block will have a unique name given by the user
+
+
+
+Data Block:
+=================
+data block in Terraform will not create anything on AWS
+
+Rather, it is like a filter that will search specific data on AWS and fetch the data on the Terraform machine.
+
+We will use this data block in our code to search for desired ami id and pass it on to the resource block
+
+
+=======================
+
 Data block to filter and get ami id
 ================================
 
