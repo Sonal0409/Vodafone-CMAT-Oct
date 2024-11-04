@@ -82,6 +82,53 @@ Save the file
 # terraform init
 
 ================================
+Data block to filter and get ami id
+================================
+
+Add the data block in the aws_infra.tf file as show below.
+Do not repeat the provider block.
+
+# vim aws_infra.tf
+
+provider "aws" {
+  region = "us-east-1"
+  shared_credentials_files = ["~/.aws/credentials"]
+}
+
+data "aws_ami" "myami" {
+
+most_recent      = true
+owners           = ["amazon"]
+filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm*"]
+}
+
+}
+
+Save the file
+
+exeucte the file
+
+# terraform apply
+
+# ls
+
+you will see terraform.tfstate file
+
+# cat terraform.tfstate
+you will see the dteials of the ami fetched.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
