@@ -149,6 +149,32 @@ you will see terraform.tfstate file
 # cat terraform.tfstate
 you will see the dteials of the ami fetched.
 
+=========================================
+Add the resource block that will use ami id form the data block:
+
+ # vim aws_infra.tf
+
+resource "aws_instance" "myec2" {
+  ami           = data.aws_ami.myami.id
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "instance1"
+  }
+}
+
+save the file
+
+# terraform apply
+
+give yes for approval
+
+check the instance in AWS
+
+# terraform destroy
+
+
+
 
 
 
