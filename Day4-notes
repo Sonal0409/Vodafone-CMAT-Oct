@@ -40,3 +40,76 @@ Click on user name>>
  > select Command Line Interface (CLI)
 
 > scroll down → click on I understand the above recommendation and want to proceed to create an access key. > press next > click on create access key
+
+Configure AWS for accesskey and secret key
+=============================================
+# apt-get install awscli -y
+
+# aws configure
+
+Give the valid access key
+
+Give the valid secret key
+
+Press enter, no need to give any region and format option
+
+You can check it by below commands
+
+# cd
+
+# ls -al
+
+# cd .aws
+
+# cat credentials
+
+
+
+================================================
+
+# mkdir myterraformfiles
+# cd myterraformfiles
+
+# vim aws_infra.tf
+
+provider "aws" {
+  region = "us-east-1"
+  shared_credentials_files = ["~/.aws/credentials"]
+}
+
+Save the file
+
+# terraform init
+
+================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
