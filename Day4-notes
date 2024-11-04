@@ -173,6 +173,89 @@ check the instance in AWS
 
 # terraform destroy
 
+===================================================
+Variables in terraform:
+==============================================
+
+# vim variables.tf
+
+variable "region" {
+  default = "us-east-1"
+}
+
+variable "cred_path" {
+default = "~/.aws/credentials"
+
+}
+
+variable "ami_value" {
+
+ default = "amzn2-ami-hvm*"
+
+}
+
+variable "instance_type" {
+
+default = "t2.micro"
+}
+
+variable "env" {
+
+default = "Dev"
+}
+
+Save the file.
+
+use the variable in the tf file
+
+# vim aws_infra.tf
+
+
+provider "aws" {
+  region = var.region
+  shared_credentials_files = [var.cred_path]
+}
+
+data "aws_ami" "myami" {
+
+most_recent      = true
+owners           = ["amazon"]
+filter {
+    name   = "name"
+    values = [var.ami_value]
+}
+
+}
+
+resource "aws_instance" "myec2" {
+  ami           = data.aws_ami.myami.id
+  instance_type = var.instance_type
+
+  tags = {
+    Name = "instance1"
+  }
+}
+
+
+Save the file
+
+# terraform plan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
