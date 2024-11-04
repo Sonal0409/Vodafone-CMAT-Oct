@@ -264,6 +264,46 @@ Save the file
 
 # terraform plan
 
+=======================================
+Dynamic Block:
+==========================================
+
+# vim aws_sg.tf
+
+variable "sg_ports"{
+type = list(number)
+default = [8080,8989,80]
+}
+
+resource "aws_security_group" "mysg" {
+  name        = "webrules"
+  description = "Custom security groups"
+
+dynamic "ingress" {
+    for_each = var.sg_ports
+    iterator = port
+    content{
+    from_port        = port.value
+    to_port          = port.value
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    
+  }
+
+}
+
+}
+
+save the file
+
+# terraform apply --target aws_security_group.mysg
+
+
+
+
+
+
+
 
 
 
