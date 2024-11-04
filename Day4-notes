@@ -298,7 +298,199 @@ save the file
 
 # terraform apply --target aws_security_group.mysg
 
+===========================================================
 
+Modules:
+===============================================
+Modules in terraform are nothing but a collection of configuration files that re written in dedicated directories
+
+A modules encapsulates group of resources, variables, output block that can reused again and again to create different infrastructure in different environments
+
+When working in a team one can create module for various resources and others in the team can source the modules and use them with different variable values
+
+Modules in terraform are reusable terraform code
+
+Knowingly or unknowingly you have been working with the concept of modules form the very beginning
+The configuration files that we have written so far which is using variables => that itself is a modules -> call it as root module
+
+Lets say I create new directories(new modules) and in which i create new .tf file and variable file. Then we can call the new directories into the main configuration files-> we call these child modules.
+
+The modules/directories with .tf files created in my VM are called as Local modules
+
+Modules that are available in Terraform Registry or modules that you create and share it to your team on SCM system -> called as Published Modules
+
+A typical module directory will consist of:
+
+> main.tf  => consist of resource blocks
+> variables.tf => consist of variables block
+> output.tf ⇒ consist of output blocks
+> README.md => describing details of modules
+
+
+
+Demo: 
+
+# cd
+
+# mkdir modules 
+
+In this directory we will write terraform reusable code
+
+# cd modules
+
+Create the first module -> which is nothing but a directory
+
+# mkdir myec2-module
+
+# cd myec2-module
+
+# vim myec2.tf
+
+data "aws_ami" "myami" {
+
+most_recent = true
+
+owners = ["amazon"]
+
+filter {
+
+ name = "name"
+ values = ["amzn2-ami-hvm*"]
+
+
+}
+
+
+}
+
+
+resource "aws_instance" "myec2" {
+
+  ami           = data.aws_ami.myami.id
+
+  instance_type = var.instance_type
+
+  tags = {
+    Name = "terraform-instance"
+  }
+}
+
+
+Save the file
+
+# vim variables.tf
+
+
+variable "instance_type" {
+
+default = "t2.micro"
+
+}
+
+
+Save this file
+
+# pwd
+
+Copy the path of the module
+
+The path to my module is : /root/modules/myec2-module
+
+Create the second module
+==========================
+
+# cd ..
+
+# mkdir mysg-module
+# cd mysg-module
+# vim mysg.tf
+
+
+resource "aws_security_group" "allow_tls" {
+  name        = "sg_rule"
+
+dynamic "ingress" {
+    for_each  = var.sg_ports
+    iterator = port
+    content{
+    from_port        = port.value
+    to_port          = port.value
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+
+  }
+
+}
+
+}
+
+
+Save the file
+
+
+# vim variables.tf
+
+variable "sg_ports" {
+
+type = list(number)
+
+default = [8080,8989,8888,8282]
+
+}
+
+
+Save the file
+
+# pwd
+
+Copy the path of the module
+
+My path of module is : /root/modules/mysg-module
+
+Now 2 modules are ready -> nothing but your reusable code
+
+You call these modules in any configuration file
+
+How do we use modules now:
+==============================
+Come out of modules directory
+
+# cd
+
+Create a new directory where we will reuse the modules
+
+# mkdir dev
+
+# cd dev
+
+In the main configuration file we will write the provider block and call the modules
+
+In the below file give your module path
+
+# vim main.tf
+
+
+provider "aws" {
+  region     = "us-east-1"
+  shared_credentials_files = ["~/.aws/credentials"]
+}
+
+module "myec2module"{
+ source = "/root/modules/myec2-module"
+}
+
+module "mysgmodule" {
+source = "/root/modules/mysg-module"
+
+}
+Save the file
+
+# terraform init
+
+This command will download the module
+The download modules will be the current directory  -> .terraform
+
+# terraform plan
 
 
 
