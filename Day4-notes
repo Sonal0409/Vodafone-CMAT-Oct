@@ -7,3 +7,36 @@ Install Terraform:
 # sudo apt-get update 
 # sudo apt-get install terraform -y
 # terraform --version
+
+Launch the AWS lab
+===========================================
+Create a new user in IAM and Create Access key and secret key
+
+
+Create user and credentials in AWS:
+============================
+
+We need create an new user in AWS whose credentials will be provided to terraform -- IAM service on AWS will be used
+
+In AWS 
+
+IAM > Users > click on add user
+
+ > give a username
+ > click next >
+ select Attach policies directly > select AdministratorAccess below >>
+
+ click on next >
+
+click on create user.
+
+Now lets attach access key and secret key to the user.
+
+Click on user name>>
+
+ click on security credentials
+
+ > Scroll down → Select Access keys> click on create access key
+ > select Command Line Interface (CLI)
+
+> scroll down → click on I understand the above recommendation and want to proceed to create an access key. > press next > click on create access key
