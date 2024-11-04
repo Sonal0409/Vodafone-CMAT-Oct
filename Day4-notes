@@ -242,7 +242,27 @@ Save the file
 # terraform plan
 
 
+============================================
+Count, count index and instance name
+===========================================
 
+# vim aws_infra.tf
+
+replace the aws_instance resource block with below code
+
+resource "aws_instance" "myec2" {
+  ami           = data.aws_ami.myami.id
+  instance_type = var.instance_type
+  count = 5
+  tags = {
+    Name = "${var.env}-${count.index}"
+  }
+}
+
+
+Save the file
+
+# terraform plan
 
 
 
